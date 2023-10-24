@@ -26,6 +26,7 @@ require ('packer').startup(function(use)
   }
 
   -- chatgpt
+  -- :ChatGPT
   use({
     "jackMort/ChatGPT.nvim",
       config = function()
@@ -39,6 +40,7 @@ require ('packer').startup(function(use)
   })
 
   -- octo github
+  -- :Octo pr list
   use {
     'pwntester/octo.nvim',
     requires = {
@@ -52,6 +54,7 @@ require ('packer').startup(function(use)
   }
   
   -- diffview
+  -- :DiffViewOpen
   use "sindrets/diffview.nvim"
 
   -- git blame
@@ -62,9 +65,11 @@ require ('packer').startup(function(use)
   use 'tjdevries/gruvbuddy.nvim'
 
   -- neoformat
+  -- :NeoFormat
   use 'sbdchd/neoformat'
 
   -- persisted
+  -- :SessionStart
   use {
     "olimorris/persisted.nvim",
     config = function()
@@ -73,8 +78,9 @@ require ('packer').startup(function(use)
   }
 
   -- surround
+  -- cs"'
   use {
-    "kylechui/nvim-surround",
+    'kylechui/nvim-surround',
     tag = "*", -- Use for stability; omit to use `main` branch for the latest features
     config = function()
         require("nvim-surround").setup({
@@ -84,15 +90,18 @@ require ('packer').startup(function(use)
   }
 
   -- oneterm
+  -- :OneTerm ranger
   use 'LoricAndre/OneTerm.nvim'
 
   -- git fugitive
   use 'tpope/vim-fugitive'
 
   -- indent blank line
+  -- :IBLToggle
   use "lukas-reineke/indent-blankline.nvim"
 
   -- hop
+  -- :HopWord
   use {
     'phaazon/hop.nvim',
     branch = 'v2', -- optional but strongly recommended
@@ -153,6 +162,7 @@ require ('packer').startup(function(use)
 	use 'mg979/vim-visual-multi'
 
 	-- nvim-tree.lua
+  -- :NvimTreeFindFileToggle
 	use 'nvim-tree/nvim-tree.lua'
 
 	-- telescope
