@@ -5,8 +5,8 @@ require ('packer').startup(function(use)
 
   --vim-rest-console
   -- :ft=rest
-  -- http://example.com
-  -- GET /
+  -- https://reqres.in
+  -- GET /api/users?page=2
   -- <c-j>
   use 'diepm/vim-rest-console'
 
