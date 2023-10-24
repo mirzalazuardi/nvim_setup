@@ -14,6 +14,9 @@ require ('packer').startup(function(use)
     end
   }
 
+  -- git fugitive
+  use 'tpope/vim-fugitive'
+
   -- indent blank line
   use "lukas-reineke/indent-blankline.nvim"
 
