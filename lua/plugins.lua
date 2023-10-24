@@ -14,6 +14,9 @@ require ('packer').startup(function(use)
     end
   }
 
+  -- indent blank line
+  use "lukas-reineke/indent-blankline.nvim"
+
 	-- Comment
 	-- gcc gbc gcw gc$ gc2j gc4k
 	use {
