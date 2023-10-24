@@ -10,11 +10,3 @@ wk.register({
   ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Tele Open Recent File" },
   ["<leader>fn"] = { "<cmd>enew<cr>", "New File" },
 })
-
-    map("n", "<leader>fb", telescope.buffers)
-    map("n", "<leader>fh", telescope.help_tags)
-    map("n", "<leader>fs", telescope.git_status)
-    map("n", "<leader>fc", telescope.git_commits)
-
-Find File grep
-Find File grep
