@@ -7,6 +7,14 @@ require ('packer').startup(function(use)
   use 'tjdevries/colorbuddy.vim'
   use 'tjdevries/gruvbuddy.nvim'
 
+  -- persisted
+  use {
+    "olimorris/persisted.nvim",
+    config = function()
+      require("persisted").setup()
+    end,
+  }
+
   -- surround
   use {
     "kylechui/nvim-surround",
