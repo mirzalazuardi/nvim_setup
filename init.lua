@@ -8,6 +8,7 @@ else
   require('configs.nvim-cmp')
   require('configs.indent-blankline')
   require("configs.oneterm")
+  require("configs.whichkey")
   require('gitsigns').setup()
   require('configs.gitsigns')
   require("mason").setup()
@@ -16,5 +17,4 @@ else
   require('gitblame').setup {
     enabled = true,
   }
-  require('maps')
 end
