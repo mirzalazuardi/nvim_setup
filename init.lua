@@ -1,5 +1,6 @@
 require('settings')
 require('plugins')
+require('colorbuddy').colorscheme('gruvbuddy')
 require('configs.telescope')
 require('configs.nvim-cmp')
 require('configs.indent-blankline')

@@ -3,6 +3,10 @@ require ('packer').startup(function(use)
 	-- :PackerSync
 	use 'wbthomason/packer.nvim'
 
+  -- colorscheme
+  use 'tjdevries/colorbuddy.vim'
+  use 'tjdevries/gruvbuddy.nvim'
+
   -- surround
   use {
     "kylechui/nvim-surround",
@@ -19,6 +23,16 @@ require ('packer').startup(function(use)
 
   -- indent blank line
   use "lukas-reineke/indent-blankline.nvim"
+
+  -- hop
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    end
+  }
 
 	-- Comment
 	-- gcc gbc gcw gc$ gc2j gc4k
