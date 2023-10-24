@@ -11,6 +11,7 @@ require ('packer').startup(function(use)
   use 'diepm/vim-rest-console'
 
   --whichkey
+  --<leader>f<space>
   use {
     "folke/which-key.nvim",
     config = function()
