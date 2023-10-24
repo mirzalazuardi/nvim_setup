@@ -7,6 +7,9 @@ require ('packer').startup(function(use)
   use 'tjdevries/colorbuddy.vim'
   use 'tjdevries/gruvbuddy.nvim'
 
+  -- neoformat
+  use 'sbdchd/neoformat'
+
   -- persisted
   use {
     "olimorris/persisted.nvim",
