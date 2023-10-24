@@ -3,6 +3,13 @@ require ('packer').startup(function(use)
 	-- :PackerSync
 	use 'wbthomason/packer.nvim'
 
+  --vim-rest-console
+  -- :ft=rest
+  -- http://example.com
+  -- GET /
+  -- <c-j>
+  use 'diepm/vim-rest-console'
+
   --whichkey
   use {
     "folke/which-key.nvim",
