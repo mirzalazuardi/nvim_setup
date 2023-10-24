@@ -7,13 +7,14 @@ else
   require('configs.telescope')
   require('configs.nvim-cmp')
   require('configs.indent-blankline')
+  require("configs.oneterm")
   require('gitsigns').setup()
   require('configs.gitsigns')
   require("mason").setup()
   require('lualine').setup()
   require("nvim-tree").setup()
-  require('maps')
   require('gitblame').setup {
     enabled = true,
   }
+  require('maps')
 end

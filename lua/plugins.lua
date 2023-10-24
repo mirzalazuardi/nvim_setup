@@ -35,6 +35,9 @@ require ('packer').startup(function(use)
     end
   }
 
+  -- oneterm
+  use 'LoricAndre/OneTerm.nvim'
+
   -- git fugitive
   use 'tpope/vim-fugitive'
 
