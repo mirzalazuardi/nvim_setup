@@ -2,6 +2,12 @@ require ('packer').startup(function(use)
 	-- packer can manage itself
 	-- :PackerSync
 	use 'wbthomason/packer.nvim'
+  
+  -- diffview
+  use "sindrets/diffview.nvim"
+
+  -- git blame
+  use 'f-person/git-blame.nvim'
 
   -- colorscheme
   use 'tjdevries/colorbuddy.vim'
