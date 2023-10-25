@@ -10,7 +10,6 @@ global.maplocalleader = " "
 
 -- Editor options
 
-o.fdm = "indent" -- Print the line number in front of each line
 o.termguicolors = true -- Print the line number in front of each line
 o.number = true -- Print the line number in front of each line
 o.relativenumber = true -- Show the line number relative to the line with the cursor in front of each line.
