@@ -9,6 +9,7 @@ else
   require('configs.indent-blankline')
   require("configs.oneterm")
   require("configs.whichkey")
+  require("configs.dap")
   require('gitsigns').setup()
   require('configs.gitsigns')
   require("mason").setup()

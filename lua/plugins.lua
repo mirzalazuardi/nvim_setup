@@ -24,6 +24,10 @@ require ('packer').startup(function(use)
       }
     end
   }
+  
+  -- DAP
+  use 'mfussenegger/nvim-dap'
+  use 'suketa/nvim-dap-ruby'
 
   -- chatgpt
   -- :ChatGPT
