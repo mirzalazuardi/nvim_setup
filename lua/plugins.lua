@@ -166,6 +166,7 @@ require ('packer').startup(function(use)
 	use 'mg979/vim-visual-multi'
 
 	-- nvim-tree.lua
+  -- https://docs.rockylinux.org/books/nvchad/nvchad_ui/nvimtree/
   -- :NvimTreeFindFileToggle
 	use 'nvim-tree/nvim-tree.lua'
 
