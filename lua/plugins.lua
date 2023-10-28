@@ -3,6 +3,9 @@ require ('packer').startup(function(use)
 	-- :PackerSync
 	use 'wbthomason/packer.nvim'
 
+  -- nvim-colorizer
+  use 'norcalli/nvim-colorizer.lua'
+
   --vim-rest-console
   -- :ft=rest
   -- https://reqres.in
@@ -99,6 +102,9 @@ require ('packer').startup(function(use)
 
   -- git fugitive
   use 'tpope/vim-fugitive'
+
+  -- rails
+  use 'tpope/vim-rails'
 
   -- indent blank line
   -- :IBLToggle

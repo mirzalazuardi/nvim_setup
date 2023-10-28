@@ -10,6 +10,7 @@ else
   require("configs.oneterm")
   require("configs.whichkey")
   require("configs.dap")
+  require'colorizer'.setup()
   require('gitsigns').setup()
   require('configs.gitsigns')
   require("mason").setup()
