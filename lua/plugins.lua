@@ -3,6 +3,28 @@ require ('packer').startup(function(use)
 	-- :PackerSync
 	use 'wbthomason/packer.nvim'
 
+  use 'wincent/ferret'
+  
+  use 'github/copilot.vim'
+
+  use {
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+  }
+
+  use {
+    'isak102/telescope-git-file-history.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim'
+    }
+  }
+
+  --dash
+  use 'rizzatti/dash.vim'
   --emmet
   use 'mattn/emmet-vim'
 

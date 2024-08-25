@@ -10,4 +10,11 @@ wk.register({
   ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Tele Open Recent File" },
   ["<leader>fe"] = { "<cmd>NvimTreeFindFileToggle<cr>", "Nvim tree explorer" },
   ["<leader>fn"] = { "<cmd>enew<cr>", "New File" },
+
+   -- Add LazyGit commands
+  ["<leader>g"] = { name = "+LazyGit" },
+  ["<leader>gg"] = { "<cmd>LazyGit<cr>", "Open LazyGit" },
+  ["<leader>gc"] = { "<cmd>LazyGitConfig<cr>", "LazyGit Config" },
+  ["<leader>gf"] = { "<cmd>LazyGitFilter<cr>", "LazyGit Filter" },
+  ["<leader>gh"] = { "<cmd>Telescope git_file_history<cr>", "Git File History" },
 })
