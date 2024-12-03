@@ -29,40 +29,27 @@ require ('packer').startup(function(use)
 
   use {
     'CopilotC-Nvim/CopilotChat.nvim',
+    branch = 'main',  -- Switch to the main branch
+    event = 'VimEnter',
     config = function()
-      local copilot_chat = require("CopilotChat")
-      copilot_chat.setup({
+      require('CopilotChat').setup({
         debug = true,
-        show_help = "yes",
+        show_help = 'yes',
         prompts = {
-          Explain = "Explain how it works by English language.",
-          Review = "Review the following code and provide concise suggestions.",
-          Tests = "Briefly explain how the selected code works, then generate unit tests.",
-          Refactor = "Refactor the code to improve clarity and readability.",
+          Explain = 'Explain how it works in English.',
+          Review = 'Review the following code and provide concise suggestions.',
+          Tests = 'Briefly explain how the selected code works, then generate unit tests.',
+          Refactor = 'Refactor the code to improve clarity and readability.',
         },
-        proxy = "******",
-        build = function()
-          vim.notify(
-            "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
-        end,
-        event = "VeryLazy",
-        dependencies = {
-          { "nvim-telescope/telescope.nvim" }, -- Use telescope for help actions
-          { "nvim-lua/plenary.nvim" }
-        }
+        -- Proxy setting omitted to use a direct connection
       })
-    end
+    end,
+    dependencies = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'github/copilot.vim' },  -- Alternatively, use 'zbirenbaum/copilot.lua'
+    },
+    build = 'make tiktoken',  -- Only on macOS or Linux
   }
-
-  -- use "github/copilot.vim"
-  -- use {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({})
-  --   end,
-  -- }
 
   use {
     "kdheepak/lazygit.nvim",
