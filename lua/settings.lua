@@ -34,6 +34,12 @@ o.inccommand = "split" -- When nonempty, shows the effects of :substitute, :smag
 --o.splitbelow = "splitright" -- When on, splitting a window will put the new window below the current one
 
 
+vim.g.vsnip_filetypes = {
+  ruby = {'rails'},
+  javascriptreact = {'javascript'},
+  typescriptreact = {'typescript'}
+}
+
 local lspconfig = require('lspconfig')
 local lsp_format = require('lsp-format')
 

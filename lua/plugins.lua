@@ -7,8 +7,7 @@ require ('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use "lukas-reineke/lsp-format.nvim"
   use 'wincent/ferret'
-  use "github/copilot.vim"
-  -- use { "zbirenbaum/copilot.lua" }
+  -- use "github/copilot.vim"
   
   use {
     "zbirenbaum/copilot.lua",
