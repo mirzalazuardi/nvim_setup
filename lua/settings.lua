@@ -33,3 +33,25 @@ o.showmatch = true -- When a bracket is inserted, briefly jump to the matching o
 o.inccommand = "split" -- When nonempty, shows the effects of :substitute, :smagic, :snomagic and user commands with the :command-preview flag as you type.
 --o.splitbelow = "splitright" -- When on, splitting a window will put the new window below the current one
 
+
+local lspconfig = require('lspconfig')
+local lsp_format = require('lsp-format')
+
+-- Setup Ruby LSP
+lspconfig.ruby_lsp.setup {
+  init_options = {
+      formatter = 'standard',
+      linters = { 'standard' },
+    },
+    filetypes = { "ruby", "erb" },
+    on_attach = function(client, bufnr)
+      lsp_format.on_attach(client)
+    end,
+    }
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.rb,*.erb",  -- Add other file types as needed
+  callback = function()
+    vim.lsp.buf.format({ async = true })  -- Use async formatting
+  end,
+})

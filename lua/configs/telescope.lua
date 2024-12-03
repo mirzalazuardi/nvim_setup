@@ -16,3 +16,4 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("persisted")
 require('telescope').load_extension('git_file_history')
+require('telescope').load_extension("live_grep_args")

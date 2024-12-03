@@ -2,10 +2,67 @@ require ('packer').startup(function(use)
 	-- packer can manage itself
 	-- :PackerSync
 	use 'wbthomason/packer.nvim'
-
+  use 'nvim-lua/plenary.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
+  use 'neovim/nvim-lspconfig'
+  use "lukas-reineke/lsp-format.nvim"
   use 'wincent/ferret'
+  use "github/copilot.vim"
+  -- use { "zbirenbaum/copilot.lua" }
   
-  use 'github/copilot.vim'
+  use {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  }
+
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  }
+
+  use {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    config = function()
+      local copilot_chat = require("CopilotChat")
+      copilot_chat.setup({
+        debug = true,
+        show_help = "yes",
+        prompts = {
+          Explain = "Explain how it works by English language.",
+          Review = "Review the following code and provide concise suggestions.",
+          Tests = "Briefly explain how the selected code works, then generate unit tests.",
+          Refactor = "Refactor the code to improve clarity and readability.",
+        },
+        proxy = "******",
+        build = function()
+          vim.notify(
+            "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
+        end,
+        event = "VeryLazy",
+        dependencies = {
+          { "nvim-telescope/telescope.nvim" }, -- Use telescope for help actions
+          { "nvim-lua/plenary.nvim" }
+        }
+      })
+    end
+  }
+
+  -- use "github/copilot.vim"
+  -- use {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({})
+  --   end,
+  -- }
 
   use {
     "kdheepak/lazygit.nvim",
@@ -19,7 +76,9 @@ require ('packer').startup(function(use)
     'isak102/telescope-git-file-history.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim'
+      'nvim-telescope/telescope.nvim',
+      'nvim-telescope/telescope-live-grep-args.nvim',
+
     }
   }
 
@@ -59,17 +118,17 @@ require ('packer').startup(function(use)
 
   -- chatgpt
   -- :ChatGPT
-  use({
-    "jackMort/ChatGPT.nvim",
-      config = function()
-        require("chatgpt").setup()
-      end,
-      requires = {
-        "MunifTanjim/nui.nvim",
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim"
-      }
-  })
+  -- use({
+  --   "jackMort/ChatGPT.nvim",
+  --     config = function()
+  --       require("chatgpt").setup()
+  --     end,
+  --     requires = {
+  --       "MunifTanjim/nui.nvim",
+  --       "nvim-lua/plenary.nvim",
+  --       "nvim-telescope/telescope.nvim"
+  --     }
+  -- })
 
   -- octo github
   -- :Octo pr list
@@ -207,7 +266,8 @@ require ('packer').startup(function(use)
 	-- telescope
 	-- <leader>ff <leader>fg <leader>fb <leader>fh <leader>fs <leader>fc
 	use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
+        'nvim-telescope/telescope.nvim',
+	  -- 'nvim-telescope/telescope.nvim', tag = '0.1.4',
 	-- or                            , branch = '0.1.x',
 	  requires = { {'nvim-lua/plenary.nvim'} }
 	}

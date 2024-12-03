@@ -14,9 +14,12 @@ else
   require('gitsigns').setup()
   require('configs.gitsigns')
   require("mason").setup()
+  require('mason-lspconfig').setup()
   require('lualine').setup()
   require("nvim-tree").setup()
   require('gitblame').setup {
     enabled = true,
   }
 end
+
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
