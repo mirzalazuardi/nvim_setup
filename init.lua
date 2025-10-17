@@ -25,6 +25,13 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
+local opts = { silent = true, noremap = true }
+vim.keymap.set("n", "<leader>tI", "<cmd>lua require('rspec').run_current_file()<cr>", opts)
+vim.keymap.set("n", "<leader>ti", "<cmd>lua require('rspec').run_current_example()<cr>", opts)
+vim.keymap.set("n", "<leader>t.", "<cmd>lua require('rspec').repeat_last_run()<cr>", opts)
+vim.keymap.set("n", "<leader>td", "<cmd>lua require('rspec').debug()<cr>", opts)
+vim.keymap.set("n", "<leader>tS", "<cmd>lua require('rspec').run_suite()<cr>", opts)
+
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
@@ -35,3 +42,65 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+vim.g.ruby_host_prog = '/Users/hermawan/.local/share/mise/installs/ruby/3.3.9/bin/ruby'
+vim.g.python3_host_prog = '/Users/hermawan/.local/share/mise/installs/python/3.10.18/bin/python'
+vim.g.node_host_prog = '/Users/hermawan/.local/share/mise/installs/node/22.18.0/bin/node'
+require('hop').setup()
+
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { "stylua" },
+    -- Conform will run multiple formatters sequentially
+    python = { "isort", "black" },
+    -- You can customize some of the format options for the filetype (:help conform.format)
+    rust = { "rustfmt", lsp_format = "fallback" },
+    -- Conform will run the first available formatter
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+  },
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end,
+})
+
+-- 🤖 AI Provider Switcher for Avante.nvim
+-- Toggle between cloud AI (Gemini/Claude/OpenAI) and local Ollama
+vim.api.nvim_create_user_command("AvanteSwitch", function(opts)
+  local provider = opts.args
+  local valid_providers = { "gemini", "claude", "openai", "ollama", "moonshot" }
+
+  if provider == "" then
+    -- Show current provider
+    local current = require("avante.config").options.provider
+    print("Current AI provider: " .. current)
+    print("Available: gemini (free), claude, openai, ollama (local), moonshot")
+    return
+  end
+
+  if not vim.tbl_contains(valid_providers, provider) then
+    print("❌ Invalid provider. Choose: gemini, claude, openai, ollama, moonshot")
+    return
+  end
+
+  require("avante.config").override({ provider = provider })
+  print("✅ Switched to: " .. provider)
+end, {
+  nargs = "?",
+  desc = "Switch Avante AI provider (gemini/claude/openai/ollama)",
+  complete = function()
+    return { "gemini", "claude", "openai", "ollama", "moonshot" }
+  end,
+})
+
+-- Quick keybinding to toggle between Gemini (cloud) and Ollama (local)
+vim.keymap.set("n", "<leader>ao", function()
+  local current = require("avante.config").options.provider
+  local new_provider = (current == "ollama") and "gemini" or "ollama"
+  require("avante.config").override({ provider = new_provider })
+  local icon = (new_provider == "ollama") and "🏠" or "🌐"
+  print(icon .. " Switched to: " .. new_provider)
+end, { desc = "Toggle Avante: Cloud ↔ Local Ollama" })
