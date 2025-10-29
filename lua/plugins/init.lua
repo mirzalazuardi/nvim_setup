@@ -117,7 +117,8 @@ return {
         -- 🏠 Local Ollama provider (free, no API key needed)
         ollama = {
           endpoint = "http://127.0.0.1:11434/v1",
-          model = "qwen2.5-coder:7b", -- Fast coding model, or use "llama3.1", "deepseek-coder-v2"
+          -- model = "qwen2.5-coder:7b", -- Fast coding model, or use "llama3.1", "deepseek-coder-v2"
+          model = "llama3:latest", -- Fast coding model, or use "llama3.1", "deepseek-coder-v2"
           parse_curl_args = function(opts, code_opts)
             return {
               url = opts.endpoint .. "/chat/completions",

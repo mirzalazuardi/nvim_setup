@@ -57,13 +57,21 @@ require("conform").setup({
     rust = { "rustfmt", lsp_format = "fallback" },
     -- Conform will run the first available formatter
     javascript = { "prettierd", "prettier", stop_after_first = true },
+    -- Ruby formatting via Rubocop
+    ruby = { "rubocop" },
   },
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
-    require("conform").format({ bufnr = args.buf })
+    -- Wrap in pcall to prevent errors from uninitialized LSP clients
+    local ok, err = pcall(function()
+      require("conform").format({ bufnr = args.buf })
+    end)
+    if not ok then
+      vim.notify("Format error (will retry): " .. tostring(err), vim.log.levels.WARN)
+    end
   end,
 })
 

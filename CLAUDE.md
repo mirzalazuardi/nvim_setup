@@ -13,7 +13,6 @@ This is a **NvChad v2.5-based Neovim configuration** with lazy loading via `lazy
 - **Plugin specs**: Organized in `lua/plugins/`:
   - `init.lua` - Main plugins (formatting, AI chat, navigation, Git, editing, LSP)
   - `ai.lua` - AI tools (Codeium completions, gen.nvim Ollama chat, easypick Aider helper)
-  - `test.lua` - Neotest framework with RSpec adapter
   - `linter.lua` - null-ls with Rubocop formatting and diagnostics
 - **Tool configs**: `lua/configs/` - lazy.nvim config, LSP setup (html/cssls), conform formatters
 
@@ -37,23 +36,18 @@ When modifying these paths, check mise versions with: `mise list`
 **Primary language: Ruby on Rails**
 - vim-rails plugin for Rails navigation
 - Rubocop for linting and formatting (via null-ls)
-- Dual RSpec test runners (rspec-integrated.nvim + neotest-rspec)
+- RSpec test runner (rspec-integrated.nvim)
 
 ## Testing
 
-### Two RSpec systems configured:
+### RSpec Integrated (direct runner)
 
-**1. RSpec Integrated** (direct runner) - Keybindings in `init.lua`:
+Keybindings in `init.lua`:
 - `<leader>tI` - Run current file
 - `<leader>ti` - Run current example (test under cursor)
 - `<leader>t.` - Repeat last run
 - `<leader>td` - Debug current test
 - `<leader>tS` - Run entire suite
-
-**2. Neotest** (universal framework) - Keybindings in `lua/mappings.lua`:
-- `<leader>tt` - Run test at cursor
-- `<leader>tf` - Run current file
-- `<leader>ts` - Toggle test summary panel
 
 ### Running tests manually:
 ```bash
@@ -230,7 +224,6 @@ Check mise installation and update path in `init.lua:46` to match `mise which ru
 │   ├── plugins/
 │   │   ├── init.lua           # Main plugins (conform, copilot, avante, fugitive, etc.)
 │   │   ├── ai.lua             # AI tools (codeium, gen.nvim, easypick)
-│   │   ├── test.lua           # Testing (neotest + rspec adapter)
 │   │   └── linter.lua         # Linting (null-ls + rubocop)
 │   └── configs/
 │       ├── lazy.lua           # Lazy.nvim performance config
