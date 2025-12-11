@@ -62,18 +62,19 @@ require("conform").setup({
   },
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    -- Wrap in pcall to prevent errors from uninitialized LSP clients
-    local ok, err = pcall(function()
-      require("conform").format({ bufnr = args.buf })
-    end)
-    if not ok then
-      vim.notify("Format error (will retry): " .. tostring(err), vim.log.levels.WARN)
-    end
-  end,
-})
+-- DISABLED: Format-on-save (uncomment to re-enable)
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = "*",
+--   callback = function(args)
+--     -- Wrap in pcall to prevent errors from uninitialized LSP clients
+--     local ok, err = pcall(function()
+--       require("conform").format({ bufnr = args.buf })
+--     end)
+--     if not ok then
+--       vim.notify("Format error (will retry): " .. tostring(err), vim.log.levels.WARN)
+--     end
+--   end,
+-- })
 
 -- 🤖 AI Provider Switcher for Avante.nvim
 -- Toggle between cloud AI (Gemini/Claude/OpenAI) and local Ollama
