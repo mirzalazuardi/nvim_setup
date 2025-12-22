@@ -1,6 +1,12 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+-- Add mise bin directories to PATH for formatters/linters
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/installs/python/3.10.18/bin:" ..
+               vim.env.HOME .. "/.local/share/mise/installs/ruby/3.3.9/bin:" ..
+               vim.env.HOME .. "/.local/share/mise/installs/node/22.18.0/bin:" ..
+               vim.env.PATH
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
