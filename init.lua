@@ -2,10 +2,26 @@ vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
 -- Add mise bin directories to PATH for formatters/linters
-vim.env.PATH = vim.env.HOME .. "/.local/share/mise/installs/python/3.10.18/bin:" ..
-               vim.env.HOME .. "/.local/share/mise/installs/ruby/3.3.9/bin:" ..
-               vim.env.HOME .. "/.local/share/mise/installs/node/22.18.0/bin:" ..
-               vim.env.PATH
+-- Dynamically detect mise versions to handle version changes gracefully
+local function get_mise_bin_path(tool, fallback_version)
+  local handle = io.popen("mise where " .. tool .. " 2>/dev/null")
+  if handle then
+    local path = handle:read("*a"):gsub("%s+", "")
+    handle:close()
+    if path ~= "" then
+      return path .. "/bin"
+    end
+  end
+  -- Fallback to hardcoded version if mise command fails
+  return vim.env.HOME .. "/.local/share/mise/installs/" .. tool .. "/" .. fallback_version .. "/bin"
+end
+
+-- Build PATH with mise-managed tools (or fallbacks)
+local python_bin = get_mise_bin_path("python", "3.10.18")
+local ruby_bin = get_mise_bin_path("ruby", "3.3.9")
+local node_bin = get_mise_bin_path("node", "22.18.0")
+
+vim.env.PATH = python_bin .. ":" .. ruby_bin .. ":" .. node_bin .. ":" .. vim.env.PATH
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -49,9 +65,24 @@ vim.schedule(function()
   require "mappings"
 end)
 
-vim.g.ruby_host_prog = '/Users/hermawan/.local/share/mise/installs/ruby/3.3.9/bin/ruby'
-vim.g.python3_host_prog = '/Users/hermawan/.local/share/mise/installs/python/3.10.18/bin/python'
-vim.g.node_host_prog = '/Users/hermawan/.local/share/mise/installs/node/22.18.0/bin/node'
+-- Dynamically set host programs with graceful fallbacks
+local function set_host_program(var_name, tool, binary_name, fallback_version)
+  local handle = io.popen("mise where " .. tool .. " 2>/dev/null")
+  if handle then
+    local path = handle:read("*a"):gsub("%s+", "")
+    handle:close()
+    if path ~= "" then
+      vim.g[var_name] = path .. "/bin/" .. binary_name
+      return
+    end
+  end
+  -- Fallback to hardcoded version
+  vim.g[var_name] = vim.env.HOME .. "/.local/share/mise/installs/" .. tool .. "/" .. fallback_version .. "/bin/" .. binary_name
+end
+
+set_host_program("ruby_host_prog", "ruby", "ruby", "3.3.9")
+set_host_program("python3_host_prog", "python", "python", "3.10.18")
+set_host_program("node_host_prog", "node", "node", "22.18.0")
 require('hop').setup()
 
 require("conform").setup({
