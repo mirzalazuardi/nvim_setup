@@ -5,6 +5,26 @@ return {
   },
 
   {
+    "harrisoncramer/gitlab.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "sindrets/diffview.nvim",
+    },
+    build = function()
+      require("gitlab.server").build(true)
+    end,
+    config = function()
+      require("gitlab").setup({
+        -- optional config, see :help gitlab.nvim
+      })
+    end,
+    keys = {
+      { "<leader>gm", function() require("gitlab").choose_merge_request() end, desc = "GitLab: Choose MR" },
+      { "<leader>gr", function() require("gitlab").review() end, desc = "GitLab: Review MR" },
+    },
+  },
+
+  {
     "CopilotC-Nvim/CopilotChat.nvim",
     lazy = false,
     dependencies = {
@@ -78,9 +98,7 @@ return {
     opts = {
       -- add any opts here
       -- for example
-      -- provider = "claude",
-      --provider = "openai",
-      provider = "gemini", -- Change to "ollama" when you want local AI
+      provider = "claude",
       providers = {
         -- 🌐 Cloud providers (require API keys & internet)
         gemini = {
@@ -113,6 +131,12 @@ return {
             temperature = 0.75,
             max_tokens = 32768,
           },
+        },
+        deepseek = {
+          __inherited_from = "openai",
+          endpoint = "https://api.deepseek.com/v1/chat/completions",
+          api_key_name = "AVANTE_DEEPSEEK_API_KEY",
+          model = "deepseek-coder",
         },
         -- 🏠 Local Ollama provider (free, no API key needed)
         ollama = {
