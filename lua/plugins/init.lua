@@ -4,6 +4,48 @@ return {
     opts = {},
   },
 
+    -- 🧠 OpenCode AI Assistant (right-side positioned)
+  {
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      -- snacks.nvim is already in your config
+      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
+    },
+    lazy = false,
+    config = function()
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        -- Use snacks provider for right-side positioning (like the GitHub video)
+        provider = {
+          enabled = "snacks",
+          snacks = {
+            auto_close = true,
+            win = {
+              position = "right",  -- Position on the right side
+              width = math.floor(vim.o.columns * 0.35),  -- 35% of screen width
+              enter = false,  -- Stay in editor after opening
+              wo = {
+                winbar = "",
+              },
+              bo = {
+                filetype = "opencode_terminal",
+              },
+            },
+          },
+        },
+      }
+      -- Required for opts.events.reload
+      vim.o.autoread = true
+      -- Key mappings (keeping your <leader>oo for toggle)
+      vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask opencode" })
+      vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end, { desc = "Execute opencode action…" })
+      vim.keymap.set({ "n", "t" }, "<leader>oo", function() require("opencode").toggle() end, { desc = "Toggle opencode" })
+      -- Additional useful mappings
+      vim.keymap.set({ "n", "x" }, "go", function() return require("opencode").operator("@this ") end, { expr = true, desc = "Add range to opencode" })
+      vim.keymap.set("n", "goo", function() return require("opencode").operator("@this ") .. "_" end, { expr = true, desc = "Add line to opencode" })
+    end,
+  },
+
   {
     "harrisoncramer/gitlab.nvim",
     dependencies = {
