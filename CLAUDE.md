@@ -12,7 +12,7 @@ This is a **NvChad v2.5-based Neovim configuration** with lazy loading via `lazy
 - **Core modules**: `lua/options.lua`, `lua/mappings.lua`, `lua/autocmds.lua` - Each inherits from NvChad defaults (`require "nvchad.options"`) then adds custom overrides
 - **Plugin specs**: Organized in `lua/plugins/`:
   - `init.lua` - Main plugins (formatting, AI chat, navigation, Git, editing, LSP)
-  - `ai.lua` - AI tools (Codeium completions, gen.nvim Ollama chat, easypick Aider helper)
+  - `ai.lua` - AI tools (Claude Code CLI integration, Codeium completions, gen.nvim Ollama chat, easypick Aider helper)
   - `linter.lua` - null-ls with Rubocop formatting and diagnostics
 - **Tool configs**: `lua/configs/` - lazy.nvim config, LSP setup (html/cssls), conform formatters
 
@@ -76,27 +76,40 @@ Configured in `lua/plugins/linter.lua` via null-ls for both formatting and diagn
 
 ## AI Tools
 
-### Four AI systems configured:
+### Five AI systems configured:
 
-**1. Codeium** (free AI completion)
+**1. Claude Code** (Anthropic CLI integration - PRIMARY)
+- Direct integration with Claude Code CLI (v2.1.2)
+- Terminal split with real-time file context and diffs
+- Full MCP protocol support (like VS Code extension)
+- Keybindings:
+  - `<leader>cc` - Toggle Claude Code terminal
+  - `<leader>cs` - Send selection to Claude (visual mode)
+  - `<leader>ca` - Accept Claude's proposed diff
+  - `<leader>cd` - Deny Claude's proposed diff
+  - `<leader>ct` - Open Claude file tree
+- Auto-reloads on file changes
+- Path: `~/.local/share/mise/installs/node/22.18.0/bin/claude`
+
+**2. Codeium** (free AI completion)
 - Loads on `BufEnter`
 - Toggle: `<leader>ac`
 
-**2. gen.nvim** (local Ollama LLM for chat/refactor)
+**3. gen.nvim** (local Ollama LLM for chat/refactor)
 - Model: llama3 (localhost:11434)
 - Trigger: `<leader>ai` or `:Gen`
 - Requires Ollama running locally
 
-**3. GitHub Copilot** (copilot.vim + CopilotChat.nvim)
+**4. GitHub Copilot** (copilot.vim + CopilotChat.nvim)
 - Always loaded (lazy = false)
 - Copilot completions work automatically
 - Chat interface available via CopilotChat commands
 
-**4. avante.nvim** (multi-provider AI chat with UI)
-- Default provider: **Gemini** (free cloud)
+**5. avante.nvim** (multi-provider AI chat with UI)
+- Default provider: **Claude** (sonnet-4)
 - Also configured:
-  - **Cloud providers**: OpenAI (gpt-4o), Claude (sonnet-4), Moonshot (Kimi k2)
-  - **Local provider**: Ollama (qwen2.5-coder:7b) - **FREE, no API key needed!**
+  - **Cloud providers**: OpenAI (gpt-4o), Gemini, Moonshot (Kimi k2)
+  - **Local provider**: Ollama (llama3) - **FREE, no API key needed!**
 - API keys via environment variables:
   - `AVANTE_GEMINI_API_KEY`
   - `AVANTE_OPEN_AI_API_KEY`
@@ -147,10 +160,19 @@ To change the default Ollama model, edit `lua/plugins/init.lua:120` and update t
 ### Custom mappings in lua/mappings.lua:
 - `;` → `:` (enter command mode from normal mode)
 - `jk` → `<ESC>` (exit insert mode)
+
+**AI Tools:**
+- `<leader>cc` - Toggle Claude Code terminal (PRIMARY AI assistant)
+- `<leader>cs` - Send selection to Claude Code (visual mode)
+- `<leader>ca` - Accept Claude Code diff
+- `<leader>cd` - Deny Claude Code diff
+- `<leader>ct` - Claude Code file tree
 - `<leader>ai` - Open AI chat/refactor (gen.nvim with Ollama)
 - `<leader>ac` - Toggle Codeium completions
 - `<leader>ao` - **Toggle Avante AI provider (Cloud ↔ Local Ollama)**
 - `<leader>at` - Run Aider CLI in current directory
+
+**Testing & Formatting:**
 - `<leader>tt` / `tf` / `ts` - Neotest commands (run test / file / summary)
 - `<leader>ff` - Format buffer
 

@@ -1,4 +1,21 @@
 return {
+  -- ✅ Claude Code: Anthropic CLI integration for AI-assisted coding
+  {
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    config = true,
+    keys = {
+      { "<leader>cc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude Code" },
+      { "<leader>cs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection to Claude" },
+      { "<leader>ca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept Claude diff" },
+      { "<leader>cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny Claude diff" },
+      { "<leader>ct", "<cmd>ClaudeCodeFileTree<cr>", desc = "Claude file tree" },
+    },
+    opts = {
+      terminal_cmd = "/Users/hermawan/.local/share/mise/installs/node/22.18.0/bin/claude",
+    },
+  },
+
   -- ✅ Codeium: AI completion gratis
   {
     "Exafunction/codeium.nvim",
