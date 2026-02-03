@@ -18,3 +18,9 @@ map("n", "<leader>at", ":!aider .<CR>", opts) -- Jalankan Aider CLI (opsional)
 
 -- 🧹 Formatter
 map("n", "<leader>ff", vim.lsp.buf.format, opts)
+
+map("n", "<leader>rw", function()
+  require("telescope.builtin").live_grep({
+    glob_pattern = "*.rb"
+  }, "live_grep ruby files")
+end, opts)
