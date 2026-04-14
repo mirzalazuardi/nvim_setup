@@ -4,6 +4,22 @@ return {
     opts = {},
   },
 
+  {
+    "mohseenrm/marko.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      debug = false, -- set true if you want verbose logging
+    },
+  },
+  
+  {
+    '2kabhishek/markit.nvim',
+    dependencies = { '2kabhishek/pickme.nvim', 'nvim-lua/plenary.nvim' },
+    opts = {}, -- Add your configuration here, required if you are not calling markit.setup manually elsewhere
+    event = { 'BufReadPre', 'BufNewFile' },
+  },
+
     -- 🧠 OpenCode AI Assistant (right-side positioned)
   {
     "NickvanDyke/opencode.nvim",
@@ -77,7 +93,18 @@ return {
       -- See Configuration section for options
     },
   },
-  { "melopilosyan/rspec-integrated.nvim", lazy = true },
+
+  { "rcarriga/nvim-notify",
+    lazy = false,
+    config = function()
+      local notify = require("notify")
+      notify.setup({ stages = "fade_in_slide_out", timeout = 3000 })
+      vim.notify = notify
+    end,
+  },
+  { "melopilosyan/rspec-integrated.nvim",
+    dependencies = { "rcarriga/nvim-notify" },
+    lazy = true },
   {
     "vim-scripts/loremipsum",
     lazy = false,
@@ -112,6 +139,16 @@ return {
   {
     "tpope/vim-fugitive",
     lazy = false,
+  },
+
+  {
+    "rhysd/git-messenger.vim",
+    lazy = false,
+    config = function()
+      vim.keymap.set("n", "<leader>gb", ":GitMessenger<CR>", { desc = "Show git blame" })
+      vim.g.git_messenger_no_default_mappings = 1
+      vim.g.git_messenger_popup_content_margins = 1  -- ✅ Single integer only
+    end,
   },
 
   {

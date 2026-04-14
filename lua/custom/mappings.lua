@@ -16,5 +16,16 @@ M.lspconfig = {
   },
 }
 
+M.markit = {
+  n = {
+    ["<leader>mt"] = { "<cmd>Markit mark toggle<cr>", "Markit: Toggle mark" },
+    ["<leader>mn"] = { "<cmd>Markit mark next<cr>", "Markit: Next mark" },
+    ["<leader>mp"] = { "<cmd>Markit mark prev<cr>", "Markit: Prev mark" },
+    ["<leader>ml"] = { "<cmd>Markit mark list<cr>", "Markit: List marks" },
+    ["<leader>mg"] = { "<cmd>Markit mark goto<cr>", "Markit: Goto mark" },
+    ["<leader>mf"] = { "<cmd>Telescope markit marks<cr>", "Telescope marks" },
+  }
+}
+
 return M
 

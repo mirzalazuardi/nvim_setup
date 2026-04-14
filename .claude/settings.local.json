@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(nvim:*)",
+      "Read(//tmp/**)",
+      "Bash(pip3 install:*)",
+      "Bash(npm install:*)",
+      "Bash(mise install:*)",
+      "Read(//Users/hermawan/.local/share/nvim/lazy/LuaSnip/**)",
+      "Bash(cat:*)",
+      "Bash(chmod:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:speckit.org)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
