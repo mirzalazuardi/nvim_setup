@@ -19,15 +19,22 @@ apt install -y git curl python3 python3-pip nodejs npm unzip zip
 ## Install Neovim
 
 ```bash
-# Ubuntu 22.04+ has neovim in apt
-apt install neovim
+# Option 1: Ubuntu repo (simplest)
+apt update && apt install -y neovim
 
-# For older versions, use the appimage
+# Option 2: AppImage (for latest version)
+# Install fuse first
+apt install -y fuse libfuse2
+
+# Download latest release
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 tar xzf nvim-linux64.tar.gz
-mv nvim-linux64 /opt/nvim
-ln -s /opt/nvim/bin/nvim /usr/local/bin/nvim
-rm nvim-linux64.tar.gz
+
+# Verify
+./nvim-linux64/bin/nvim --version
+
+# Optional: make it default
+ln -sf $(pwd)/nvim-linux64/bin/nvim /usr/local/bin/nvim
 ```
 
 Verify:
