@@ -85,10 +85,13 @@ gem install rubocop
 
 ```bash
 # uv is automatically installed with mise Python
-# Install common tools via uv
-uv tool install ruff
-uv tool install black
-uv tool install isort
+uv tool install ruff black isort
+```
+
+Python uses `ruff` for formatting (via conform.nvim):
+```bash
+# Verify ruff is installed
+which ruff
 ```
 
 ## Install the Nvim Config
