@@ -1,5 +1,5 @@
 return {
-  -- ✅ Claude Code: Anthropic CLI integration for AI-assisted coding
+  -- Claude Code: Anthropic CLI integration for AI-assisted coding
   {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
@@ -11,12 +11,9 @@ return {
       { "<leader>cd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny Claude diff" },
       { "<leader>ct", "<cmd>ClaudeCodeFileTree<cr>", desc = "Claude file tree" },
     },
-    opts = {
-      terminal_cmd = "/Users/hermawan/.local/share/mise/installs/node/22.18.0/bin/claude",
-    },
   },
 
-  -- ✅ Codeium: AI completion gratis
+  -- Codeium: AI completion gratis
   {
     "Exafunction/codeium.nvim",
     event = "BufEnter",
@@ -25,12 +22,12 @@ return {
     end,
   },
 
-  -- ✅ gen.nvim: chat/refactor pakai Ollama lokal
+  -- gen.nvim: chat/refactor using Ollama (local or remote)
   {
     "David-Kunz/gen.nvim",
     opts = {
       model = "llama3",
-      host = "http://localhost:11434", -- pastikan Ollama sudah jalan
+      host = "http://localhost:11434",
       quit_map = "q",
       retry_map = "<c-r>",
       accept_map = "<c-y>",
@@ -40,7 +37,7 @@ return {
     },
   },
 
-  -- ✅ Aider CLI helper (opsional)
+  -- Aider CLI helper
   {
     "axkirillov/easypick.nvim",
     dependencies = "nvim-telescope/telescope.nvim",

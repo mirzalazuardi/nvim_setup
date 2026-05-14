@@ -3,7 +3,6 @@ require("nvchad.configs.lspconfig").defaults()
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
--- TypeScript/JavaScript (ts_ls, formerly tsserver)
 vim.lsp.config['ts_ls'] = {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -27,7 +26,6 @@ vim.lsp.config['ts_ls'] = {
   filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
 }
 
--- Python
 vim.lsp.config['pyright'] = {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -42,5 +40,9 @@ vim.lsp.config['pyright'] = {
   },
 }
 
--- Enable LSP servers
-vim.lsp.enable({ "ts_ls", "pyright", "html", "cssls" })
+vim.lsp.config['phpactor'] = {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+vim.lsp.enable({ "ts_ls", "pyright", "html", "cssls", "phpactor" })

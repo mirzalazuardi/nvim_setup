@@ -5,6 +5,60 @@ return {
   },
 
   {
+    'ray-x/telescope-ast-grep.nvim',
+    dependencies = {
+      {'nvim-lua/plenary.nvim'},
+      {'nvim-telescope/telescope.nvim'},
+    },
+  },
+
+  {
+    "emrearmagan/dockyard.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "akinsho/toggleterm.nvim", -- optional, for shell sessions
+    },
+    cmd = { "Dockyard", "DockyardFloat" },
+    lazy = true,
+    config = function()
+      require("dockyard").setup({
+        display = {
+          -- Available views: "containers", "compose", "images", "networks", "volumes"
+          views = { "containers", "images", "networks", "volumes" },
+        },
+        loglens = {
+          containers = {
+            -- Custom highlights for specific containers
+            -- Example: highlight ERROR lines in red for all containers
+            ["*"] = {
+              highlights = {
+                { pattern = "%f[%a]ERROR%f[%A]", group = "ErrorMsg" },
+                { pattern = "%f[%a]WARN%f[%A]", group = "WarningMsg" },
+                { pattern = "%f[%a]FATAL%f[%A]", group = "ErrorMsg" },
+              },
+            },
+          },
+        },
+        -- Keymaps (optional, customize as needed)
+        keymaps = {
+          -- Docker actions
+          start = "s",
+          stop = "x",
+          restart = "r",
+          remove = "d",
+          inspect = "i",
+          logs = "l",
+          shell = "S",
+          -- Navigation
+          refresh = "R",
+          close = "q",
+          help = "?",
+        },
+      })
+    end,
+  },
+
+  {
     "mohseenrm/marko.nvim",
     priority = 1000,
     lazy = false,
@@ -294,7 +348,7 @@ return {
         "vim", "lua", "vimdoc",
         "html", "css",
         "ruby", "python", "javascript", "typescript",
-        "markdown", "markdown_inline",
+        "php", "markdown", "markdown_inline",
         "json", "yaml", "toml",
       },
       auto_install = true,

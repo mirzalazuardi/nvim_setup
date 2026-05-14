@@ -2,8 +2,8 @@ vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
 -- Add mise bin directories to PATH for formatters/linters
--- Dynamically detect mise versions to handle version changes gracefully
-local function get_mise_bin_path(tool, fallback_version)
+-- Works on both macOS and Linux
+local function get_mise_bin_path(tool)
   local handle = io.popen("mise where " .. tool .. " 2>/dev/null")
   if handle then
     local path = handle:read("*a"):gsub("%s+", "")
@@ -12,14 +12,13 @@ local function get_mise_bin_path(tool, fallback_version)
       return path .. "/bin"
     end
   end
-  -- Fallback to hardcoded version if mise command fails
-  return vim.env.HOME .. "/.local/share/mise/installs/" .. tool .. "/" .. fallback_version .. "/bin"
+  return nil
 end
 
--- Build PATH with mise-managed tools (or fallbacks)
-local python_bin = get_mise_bin_path("python", "3.10.18")
-local ruby_bin = get_mise_bin_path("ruby", "3.3.9")
-local node_bin = get_mise_bin_path("node", "22.18.0")
+-- Build PATH with mise-managed tools (graceful fallback to standard paths)
+local python_bin = get_mise_bin_path("python") or "/usr/bin"
+local ruby_bin = get_mise_bin_path("ruby") or "/usr/bin"
+local node_bin = get_mise_bin_path("node") or "/usr/local/bin"
 
 vim.env.PATH = python_bin .. ":" .. ruby_bin .. ":" .. node_bin .. ":" .. vim.env.PATH
 
@@ -65,37 +64,42 @@ vim.schedule(function()
   require "mappings"
 end)
 
--- Dynamically set host programs with graceful fallbacks
-local function set_host_program(var_name, tool, binary_name, fallback_version)
-  local handle = io.popen("mise where " .. tool .. " 2>/dev/null")
-  if handle then
-    local path = handle:read("*a"):gsub("%s+", "")
-    handle:close()
+-- Dynamically set host programs with graceful fallbacks for Linux/macOS
+local function set_host_program(var_name, tool)
+  local mise_path = io.popen("mise where " .. tool .. " 2>/dev/null")
+  if mise_path then
+    local path = mise_path:read("*a"):gsub("%s+", "")
+    mise_path:close()
     if path ~= "" then
-      vim.g[var_name] = path .. "/bin/" .. binary_name
+      vim.g[var_name] = path .. "/bin/" .. tool
       return
     end
   end
-  -- Fallback to hardcoded version
-  vim.g[var_name] = vim.env.HOME .. "/.local/share/mise/installs/" .. tool .. "/" .. fallback_version .. "/bin/" .. binary_name
+  -- Fallback to standard Linux paths
+  local std路径 = {
+    ruby = "/usr/bin/ruby",
+    python = "/usr/bin/python3",
+    node = "/usr/local/bin/node",
+  }
+  vim.g[var_name] = std路径[tool] or ""
 end
 
-set_host_program("ruby_host_prog", "ruby", "ruby", "3.3.9")
-set_host_program("python3_host_prog", "python", "python", "3.10.18")
-set_host_program("node_host_prog", "node", "node", "22.18.0")
+set_host_program("ruby_host_prog", "ruby")
+set_host_program("python3_host_prog", "python")
+set_host_program("node_host_prog", "node")
 require('hop').setup()
 
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
-    -- Conform will run multiple formatters sequentially
     python = { "isort", "black" },
-    -- You can customize some of the format options for the filetype (:help conform.format)
     rust = { "rustfmt", lsp_format = "fallback" },
-    -- Conform will run the first available formatter
     javascript = { "prettierd", "prettier", stop_after_first = true },
-    -- Ruby formatting via Rubocop
+    javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+    typescript = { "prettierd", "prettier", stop_after_first = true },
+    typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     ruby = { "rubocop" },
+    php = { "phpcbf", "php" },
   },
 })
 
@@ -150,3 +154,15 @@ vim.keymap.set("n", "<leader>ao", function()
   local icon = (new_provider == "ollama") and "🏠" or "🌐"
   print(icon .. " Switched to: " .. new_provider)
 end, { desc = "Toggle Avante: Cloud ↔ Local Ollama" })
+
+vim.opt.listchars = { space = " " }  -- or remove space key entirely
+
+
+-- vim.opt.listchars = {
+--   tab = "→ ",
+--   trail = "·",    -- only trailing spaces show as dots
+--   extends = "›",
+--   precedes = "‹",
+--   nbsp = "␣",
+--   -- no `space` key = regular spaces are invisible
+-- }
