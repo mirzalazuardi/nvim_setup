@@ -52,7 +52,7 @@ source ~/.bashrc
 
 Install languages:
 ```bash
-mise use -g node@22 python@3.10 ruby@3.3 php@latest
+mise use -g python@3.13 node@22 ruby@3.4 php@8.3
 
 # Enable uv for fast Python package management
 mise settings python.uv = true
@@ -95,10 +95,30 @@ gem install rubocop
 uv tool install ruff black isort
 ```
 
-Python uses `ruff` for formatting (via conform.nvim):
+Python uses `ruff` for formatting (via conform.nvim). After installing:
 ```bash
-# Verify ruff is installed
+# Verify ruff is available
 which ruff
+```
+
+## Testing
+
+```bash
+# Test PHP file
+nvim test.php
+# Should show LSP diagnostics
+
+# Test JS file
+nvim test.js
+# Should show LSP + prettier
+
+# Test Ruby file
+nvim test.rb
+# Should show rubocop diagnostics
+
+# Test Python file
+nvim test.py
+# Should show ruff diagnostics
 ```
 
 ## Install the Nvim Config
