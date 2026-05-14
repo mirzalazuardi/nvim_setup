@@ -1,6 +1,6 @@
 # Linux VPS Setup Guide
 
-This guide covers installing this Neovim config on a lightweight VPS for PHP, JavaScript, and Ruby development.
+This guide covers installing this Neovim config on a lightweight VPS for PHP, JavaScript, Ruby, and Python development.
 
 ## Prerequisites
 
@@ -46,6 +46,9 @@ source ~/.bashrc
 Install languages:
 ```bash
 mise use -g node@22 python@3.10 ruby@3.3 php@latest
+
+# Enable uv for fast Python package management
+mise settings python.uv = true
 ```
 
 ## Install PHP Tools
@@ -78,6 +81,16 @@ npm install -g prettierd typescript typescript-language-server
 gem install rubocop
 ```
 
+## Install Python Tools (uv)
+
+```bash
+# uv is automatically installed with mise Python
+# Install common tools via uv
+uv tool install ruff
+uv tool install black
+uv tool install isort
+```
+
 ## Install the Nvim Config
 
 ```bash
@@ -98,6 +111,12 @@ nvim +Lazy sync
 
 ### TypeScript/JavaScript
 LSP is included via NvChad. Treesitter auto-installs parsers.
+
+### Python
+Uses `pyright` LSP (included in NvChad). Python formatting via `ruff` + `black`:
+```bash
+uv tool install ruff black isort
+```
 
 ### PHP
 Uses `phpactor` LSP:
