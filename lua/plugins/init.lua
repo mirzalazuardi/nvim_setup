@@ -5,6 +5,12 @@ return {
   },
 
   {
+    "nvim-telescope/telescope.nvim",
+    version = "0.1.8",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
+  {
     'ray-x/telescope-ast-grep.nvim',
     dependencies = {
       {'nvim-lua/plenary.nvim'},
@@ -165,10 +171,6 @@ return {
   },
   {
     "github/copilot.vim",
-    lazy = false,
-  },
-  {
-    "phaazon/hop.nvim",
     lazy = false,
   },
   {

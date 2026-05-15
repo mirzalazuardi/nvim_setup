@@ -87,7 +87,6 @@ end
 set_host_program("ruby_host_prog", "ruby")
 set_host_program("python3_host_prog", "python")
 set_host_program("node_host_prog", "node")
-require('hop').setup()
 
 require("conform").setup({
   formatters_by_ft = {
