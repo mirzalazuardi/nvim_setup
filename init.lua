@@ -133,43 +133,7 @@ require("conform").setup({
 --   end,
 -- })
 
--- 🤖 AI Provider Switcher for Avante.nvim
--- Toggle between cloud AI (Gemini/Claude/OpenAI) and local Ollama
-vim.api.nvim_create_user_command("AvanteSwitch", function(opts)
-  local provider = opts.args
-  local valid_providers = { "gemini", "claude", "openai", "ollama", "moonshot" }
 
-  if provider == "" then
-    -- Show current provider
-    local current = require("avante.config").options.provider
-    print("Current AI provider: " .. current)
-    print("Available: gemini (free), claude, openai, ollama (local), moonshot")
-    return
-  end
-
-  if not vim.tbl_contains(valid_providers, provider) then
-    print("❌ Invalid provider. Choose: gemini, claude, openai, ollama, moonshot")
-    return
-  end
-
-  require("avante.config").override({ provider = provider })
-  print("✅ Switched to: " .. provider)
-end, {
-  nargs = "?",
-  desc = "Switch Avante AI provider (gemini/claude/openai/ollama)",
-  complete = function()
-    return { "gemini", "claude", "openai", "ollama", "moonshot" }
-  end,
-})
-
--- Quick keybinding to toggle between Gemini (cloud) and Ollama (local)
-vim.keymap.set("n", "<leader>ao", function()
-  local current = require("avante.config").options.provider
-  local new_provider = (current == "ollama") and "gemini" or "ollama"
-  require("avante.config").override({ provider = new_provider })
-  local icon = (new_provider == "ollama") and "🏠" or "🌐"
-  print(icon .. " Switched to: " .. new_provider)
-end, { desc = "Toggle Avante: Cloud ↔ Local Ollama" })
 
 vim.opt.listchars = { space = " " }  -- or remove space key entirely
 
