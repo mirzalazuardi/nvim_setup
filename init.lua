@@ -46,6 +46,23 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
+-- Patch NvChad's LSP defaults for Neovim 0.10 compatibility (no vim.lsp.config)
+local ok_nv, nvchad_lsp = pcall(require, "nvchad.configs.lspconfig")
+if ok_nv and nvchad_lsp.defaults then
+  nvchad_lsp.defaults = function()
+    pcall(dofile, vim.g.base46_cache .. "lsp")
+    local ok_diag, diag = pcall(require, "nvchad.lsp")
+    if ok_diag then
+      pcall(diag.diagnostic_config)
+    end
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = function(args)
+        nvchad_lsp.on_attach(_, args.buf)
+      end,
+    })
+  end
+end
+
 local opts = { silent = true, noremap = true }
 vim.keymap.set("n", "<leader>tI", "<cmd>lua require('rspec').run_current_file()<cr>", opts)
 vim.keymap.set("n", "<leader>ti", "<cmd>lua require('rspec').run_current_example()<cr>", opts)
