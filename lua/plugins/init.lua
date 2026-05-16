@@ -181,6 +181,22 @@ return {
 
   -- These are some examples, uncomment them if you want to see them work!
   {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
+    opts = {
+      ensure_installed = {
+        "lua_ls",
+        "ts_ls",
+        "pyright",
+        "phpactor",
+        "ruby_lsp",
+        "html",
+        "cssls",
+      },
+    },
+  },
+
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require "configs.lspconfig"

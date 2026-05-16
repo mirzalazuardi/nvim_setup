@@ -1,32 +1,33 @@
-require("nvchad.configs.lspconfig").defaults()
-
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local capabilities = require("nvchad.configs.lspconfig").capabilities
+local lspconfig = require("lspconfig")
 
-vim.lsp.config['ts_ls'] = {
+lspconfig.lua_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
-    typescript = {
-      inlayHints = {
-        includeInlayParameterNameHints = "all",
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-      },
-    },
-    javascript = {
-      inlayHints = {
-        includeInlayParameterNameHints = "all",
-        includeInlayFunctionParameterTypeHints = true,
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      diagnostics = { globals = { "vim" } },
+      workspace = {
+        library = {
+          vim.fn.expand("$VIMRUNTIME/lua"),
+          vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types",
+          vim.fn.stdpath("data") .. "/lazy/lazy/nvim/lua/lazy",
+          "${3rd}/luv/library",
+        },
       },
     },
   },
-  filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
-}
+})
 
-vim.lsp.config['pyright'] = {
+lspconfig.ts_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
+})
+
+lspconfig.pyright.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -38,11 +39,18 @@ vim.lsp.config['pyright'] = {
       },
     },
   },
-}
+})
 
-vim.lsp.config['phpactor'] = {
+lspconfig.phpactor.setup({
   on_attach = on_attach,
   capabilities = capabilities,
-}
+})
 
-vim.lsp.enable({ "ts_ls", "pyright", "html", "cssls", "phpactor" })
+lspconfig.ruby_lsp.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
+lspconfig.html.setup({ on_attach = on_attach, capabilities = capabilities })
+
+lspconfig.cssls.setup({ on_attach = on_attach, capabilities = capabilities })
