@@ -5,6 +5,88 @@ return {
   },
 
   {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = function()
+      require("git-conflict").setup{}
+    end,
+  },
+
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = false,
+    cmd = {
+        "LazyGit",
+        "LazyGitConfig",
+        "LazyGitCurrentFile",
+        "LazyGitFilter",
+        "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-telescope/telescope.nvim",
+        "nvim-lua/plenary.nvim",
+    },
+    config = function()
+        require("telescope").load_extension("lazygit")
+    end,
+  },
+
+  {
+    'ray-x/telescope-ast-grep.nvim',
+    dependencies = {
+      {'nvim-lua/plenary.nvim'},
+      {'nvim-telescope/telescope.nvim'},
+    },
+  },
+
+  {
+    "emrearmagan/dockyard.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "akinsho/toggleterm.nvim", -- optional, for shell sessions
+    },
+    cmd = { "Dockyard", "DockyardFloat" },
+    lazy = true,
+    config = function()
+      require("dockyard").setup({
+        display = {
+          -- Available views: "containers", "compose", "images", "networks", "volumes"
+          views = { "containers", "images", "networks", "volumes" },
+        },
+        loglens = {
+          containers = {
+            -- Custom highlights for specific containers
+            -- Example: highlight ERROR lines in red for all containers
+            ["*"] = {
+              highlights = {
+                { pattern = "%f[%a]ERROR%f[%A]", group = "ErrorMsg" },
+                { pattern = "%f[%a]WARN%f[%A]", group = "WarningMsg" },
+                { pattern = "%f[%a]FATAL%f[%A]", group = "ErrorMsg" },
+              },
+            },
+          },
+        },
+        -- Keymaps (optional, customize as needed)
+        keymaps = {
+          -- Docker actions
+          start = "s",
+          stop = "x",
+          restart = "r",
+          remove = "d",
+          inspect = "i",
+          logs = "l",
+          shell = "S",
+          -- Navigation
+          refresh = "R",
+          close = "q",
+          help = "?",
+        },
+      })
+    end,
+  },
+
+  {
     "mohseenrm/marko.nvim",
     priority = 1000,
     lazy = false,
